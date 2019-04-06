@@ -42,26 +42,11 @@ function start() {
       }
     ])
     .then(function(answer) {
-      // get the information of the chosen item
-      var chosenItem;
-      connection.query("SELECT * FROM products", function(err, result) {
-        if (err) throw err;
-        for (var i = 0; i < results.length; i++) {
-          if (results[i].item_id === answer.productID) {
-            chosenItem = results[i];
-          }
-        }
-
-        if (answer.amount > chosenItem.stock_quantity) {
-          console.log("insufficient stock");
-        } else {
-          console.log(
-            "Okay! You are buying " +
-              answer.amount +
-              " units of product number " +
-              answer.productID
-          );
-        }
-      });
+      console.log(
+        "Okay! You are buying " +
+          answer.amount +
+          " units of product number " +
+          answer.productID
+      );
     });
 }
