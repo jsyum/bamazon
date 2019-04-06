@@ -43,15 +43,25 @@ function start() {
             " units of product number " +
             answer.productID
         );
-        connection.query("UPDATE products SET ? WHERE ?", [
-          {
-            stock_quantity: answer.amount
-            // stock_quantity: "75"
-          },
-          {
-            item_id: answer.productID
+        connection.query(
+          `SELECT stock_quantity FROM products WHERE item_id=${
+            answer.productID
+          };`,
+          function(err, result) {
+            let stockQty = result[0].stock_quantity;
+
+            if (err) throw err;
+            console.log("STOCK QUANTITY", result[0].stock_quantity);
+
+            connection.query(
+              `UPDATE products SET stock_quantity=${result[0].stock_quantity -
+                answer.amount} WHERE item_id=${answer.productID};`,
+              function(err, result) {
+                if (err) throw err;
+              }
+            );
           }
-        ]);
+        );
       });
   });
 }
