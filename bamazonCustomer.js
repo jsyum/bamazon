@@ -51,10 +51,10 @@ function start() {
             if (err) throw err;
             console.log("INITIAL STOCK QUANTITY", result[0].stock_quantity);
             let stockQty = result[0].stock_quantity - answer.amount;
-            console.log("RESULTING STOCK QUANTITY", stockQty);
             if (stockQty < answer.amount) {
-              console.log("Insufficient stock");
+              console.log("Insufficient stock!");
             } else {
+              console.log("RESULTING STOCK QUANTITY", stockQty);
               connection.query(
                 `UPDATE products SET stock_quantity=${stockQty} WHERE item_id=${
                   answer.productID
