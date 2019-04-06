@@ -43,16 +43,15 @@ function start() {
             " units of product number " +
             answer.productID
         );
-        "UPDATE products SET ? WHERE ?",
-          [
-            {
-              // stock_quantity: stock_quantity - answer.amount
-              stock_quantity: "10"
-            },
-            {
-              id: answer.productID
-            }
-          ];
+        connection.query("UPDATE products SET ? WHERE ?", [
+          {
+            stock_quantity: answer.amount
+            // stock_quantity: "75"
+          },
+          {
+            item_id: answer.productID
+          }
+        ]);
       });
   });
 }
