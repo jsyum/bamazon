@@ -14,39 +14,45 @@ var connection = mysql.createConnection({
 // connect to the mysql server and run function that will prompt user
 connection.connect(function(err) {
   if (err) throw err;
-  display();
+  start();
 });
 
 //function that will display the inventory
-function display() {
+function start() {
   connection.query("SELECT * FROM products", function(err, result) {
     if (err) throw err;
     console.log(result);
-    start();
-  });
-}
 
-// function that prompts user what action they should take
-function start() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "What is the ID# of the product you'd like to buy?",
-        name: "productID"
-      },
-      {
-        type: "input",
-        message: "How many would you like to buy?",
-        name: "amount"
-      }
-    ])
-    .then(function(answer) {
-      console.log(
-        "Okay! You are buying " +
-          answer.amount +
-          " units of product number " +
-          answer.productID
-      );
-    });
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the ID# of the product you'd like to buy?",
+          name: "productID"
+        },
+        {
+          type: "input",
+          message: "How many would you like to buy?",
+          name: "amount"
+        }
+      ])
+      .then(function(answer) {
+        console.log(
+          "Okay! You are buying " +
+            answer.amount +
+            " units of product number " +
+            answer.productID
+        );
+        "UPDATE products SET ? WHERE ?",
+          [
+            {
+              // stock_quantity: stock_quantity - answer.amount
+              stock_quantity: "10"
+            },
+            {
+              id: answer.productID
+            }
+          ];
+      });
+  });
 }
