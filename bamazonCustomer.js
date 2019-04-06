@@ -48,18 +48,22 @@ function start() {
             answer.productID
           };`,
           function(err, result) {
-            let stockQty = result[0].stock_quantity;
-
             if (err) throw err;
-            console.log("STOCK QUANTITY", result[0].stock_quantity);
-
-            connection.query(
-              `UPDATE products SET stock_quantity=${result[0].stock_quantity -
-                answer.amount} WHERE item_id=${answer.productID};`,
-              function(err, result) {
-                if (err) throw err;
-              }
-            );
+            console.log("INITIAL STOCK QUANTITY", result[0].stock_quantity);
+            let stockQty = result[0].stock_quantity - answer.amount;
+            console.log("RESULTING STOCK QUANTITY", stockQty);
+            if (stockQty < answer.amount) {
+              console.log("Insufficient stock");
+            } else {
+              connection.query(
+                `UPDATE products SET stock_quantity=${stockQty} WHERE item_id=${
+                  answer.productID
+                };`,
+                function(err, res) {
+                  if (err) throw err;
+                }
+              );
+            }
           }
         );
       });
