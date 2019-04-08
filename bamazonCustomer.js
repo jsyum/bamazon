@@ -37,30 +37,41 @@ function start() {
         }
       ])
       .then(function(answer) {
-        console.log(
-          "Okay! You are buying " +
-            answer.amount +
-            " units of product number " +
-            answer.productID
-        );
         connection.query(
           `SELECT stock_quantity FROM products WHERE item_id=${
             answer.productID
           };`,
           function(err, result) {
             if (err) throw err;
-            console.log("INITIAL STOCK QUANTITY", result[0].stock_quantity);
             let stockQty = result[0].stock_quantity - answer.amount;
             if (stockQty < answer.amount) {
-              console.log("Insufficient stock!");
+              console.log("Insufficient stock!!");
             } else {
-              console.log("RESULTING STOCK QUANTITY", stockQty);
+              console.log(
+                "Okay! You are buying " +
+                  answer.amount +
+                  " units of product number " +
+                  answer.productID +
+                  "\n" +
+                  "INITIAL STOCK QUANTITY",
+                result[0].stock_quantity + "\n" + "RESULTING STOCK QUANTITY",
+                stockQty
+              );
               connection.query(
                 `UPDATE products SET stock_quantity=${stockQty} WHERE item_id=${
                   answer.productID
                 };`,
                 function(err, res) {
                   if (err) throw err;
+                }
+              );
+              connection.query(
+                `SELECT price FROM products WHERE item_id=${answer.productID}`,
+                function(err, result) {
+                  if (err) throw err;
+                  console.log(
+                    "Your total is $" + result[0].price * answer.amount
+                  );
                 }
               );
             }

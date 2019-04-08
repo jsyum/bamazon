@@ -44,5 +44,4 @@ VALUES ("Food Scale", "Kitchen", 10.95, 150);
 
 
 SELECT * FROM products;
-UPDATE products SET stock_quantity=10 WHERE item_id=1;
 
