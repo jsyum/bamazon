@@ -1,8 +1,7 @@
 # bamazon
 ![Liri Demo](/bamazondemo.png?raw=true "liridemo")
 
-Link to demo video:
-https://drive.google.com/file/d/1k7nqdj5Iqz_Ba_uXAMJ7rV5Es87pnMP1/view
+<a href="https://drive.google.com/file/d/1k7nqdj5Iqz_Ba_uXAMJ7rV5Es87pnMP1/view" target="_blank">Link to demo video</a>
 
 This is an interactive command line app using Node.js to query a database created in MySQL.
 The app mimics an online storefront where a customer can request the quantity of an item they would like to buy, and the total price is returned.
